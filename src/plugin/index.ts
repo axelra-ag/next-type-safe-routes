@@ -7,11 +7,11 @@ import path from "path";
 const packageName = "next-type-safe-routes";
 const filename = "utils.d.ts";
 
-const log = (message: string) => {
+export const log = (message: string) => {
   console.log(`\x1b[36m${packageName}\x1b[0m: ${message}`);
 };
 
-const writeTypesToDisc = (nextPagesDirectory: string) => {
+export const writeTypesToDisc = (nextPagesDirectory: string) => {
   // we assume the src directory is the directory containing the pages directory
   const srcDir = path.dirname(__dirname);
   const typeScriptFile = generateTypeScriptFile(nextPagesDirectory);
