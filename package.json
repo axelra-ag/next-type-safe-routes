@@ -1,6 +1,6 @@
 {
-  "name": "next-type-safe-routes",
-  "version": "0.3.1-alpha.1",
+  "name": "@axelraag/next-type-safe-routes",
+  "version": "0.3.1",
   "description": "Never should your users experience broken links again!",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -49,5 +49,12 @@
   },
   "keywords": [],
   "author": "Christian Kastbjerg",
-  "license": "ISC"
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ckastbjerg/next-type-safe-routes/issues"
+  },
+  "homepage": "https://github.com/ckastbjerg/next-type-safe-routes#readme",
+  "directories": {
+    "example": "example"
+  }
 }
