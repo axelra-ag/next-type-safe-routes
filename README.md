@@ -1,6 +1,6 @@
 <p align="center">
   <img src="https://upload.wikimedia.org/wikipedia/commons/8/8e/Nextjs-logo.svg" height="100">
-  <h1 align="center">next-type-safe-routes</h1>
+  <h1 align="center">@axelraag/next-type-safe-routes</h1>
 </p>
 
 <p align="center">
@@ -29,16 +29,14 @@ With the types generated, you can use the `getRoute` utility to retrieve **links
 Install using yarn:
 
 ```bash
-yarn add next-type-safe-routes
+yarn add @axelraag/next-type-safe-routes
 ```
 
 Or using npm:
 
 ```bash
-npm install next-type-safe-routes --save
+npm install @axelraag/next-type-safe-routes --save
 ```
-
-## Usage
 
 > For an example setup, see the [`/example`](/example) folder
 
@@ -51,9 +49,11 @@ const nextTypeSafePages = require("next-type-safe-routes/plugin");
 module.exports = withPlugins([nextTypeSafePages]);
 ```
 
-When you start up your application, we will generate types for all of your pages and API routes and save them to the file `@types/next-type-safe-routes/index.d.ts` in the root of your project. The file will be updated whenever you add or remove pages and API routes.
+When you start up your application, it will generate types for all of your pages and API routes and save them to the file `next-type-safe-routes/dist/utils.d.ts` in the package. The file will be updated whenever you add or remove pages and API routes.
 
-> Note, you should commit this file as part of your project. And if you're using a code formatter or linter, you may want to add this file to your ignore files. E.g. `.eslintignore` and `.prettierignore` files.
+To generate the types without starting the application, execute the script `postinstall-generation.js`. This may be necessary to use it in CI/CD that all test pass.
+
+## Usage
 
 You can now import the `getRoute` util from `next-type-safe-routes` and use it to retrieve a route that's is guaranteed to exist in your application.
 
