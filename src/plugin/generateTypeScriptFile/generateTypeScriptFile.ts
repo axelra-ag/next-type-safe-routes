@@ -3,9 +3,10 @@ import walkSync from "walk-sync";
 import getFileContent from "./getFileContent";
 import getRoutes from "./getRoutes";
 
-const ignorePagesRoutes = ["_app.tsx", "_document.tsx"];
+const ignorePagesRoutes = ["_app", "_document"];
 const shouldIncludePageEntry = (route: string) =>
-  route.match(".tsx") && !ignorePagesRoutes.includes(route);
+  route.match(".tsx") &&
+  !ignorePagesRoutes.includes(route.replace(/(\.[^.]+)+$/, ""));
 const shouldIncludeApiRouteEntry = (endpoint: string) => endpoint.match(".ts");
 
 const getApiRouteFiles = (pagesDir: string) => {
