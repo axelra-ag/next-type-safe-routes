@@ -53,6 +53,14 @@ When you start up your application, it will generate types for all of your pages
 
 To generate the types without starting the application, execute the script `postinstall-generation.js`. This may be necessary to use it in CI/CD that all test pass.
 
+```json
+{
+  "scripts": {
+    "postinstall": "node node_modules/next-type-safe-routes/dist/postinstall-generation.js"
+  }
+}
+```
+
 ## Usage
 
 You can now import the `getRoute` util from `next-type-safe-routes` and use it to retrieve a route that's is guaranteed to exist in your application.
