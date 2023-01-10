@@ -51,12 +51,12 @@ module.exports = withPlugins([nextTypeSafePages]);
 
 When you start up your application, it will generate types for all of your pages and API routes and save them to the file `next-type-safe-routes/dist/utils.d.ts` in the package. The file will be updated whenever you add or remove pages and API routes.
 
-To generate the types without starting the application, execute the script `postinstall-generation.js`. This may be necessary to use it in CI/CD that all test pass.
+To generate the types without starting the application, execute the command `next-type-safe-routes`. This may be necessary to use it in CI/CD that all test pass.
 
 ```json
 {
   "scripts": {
-    "postinstall": "node node_modules/next-type-safe-routes/dist/postinstall-generation.js"
+    "postinstall": "next-type-safe-routes"
   }
 }
 ```
