@@ -24,8 +24,12 @@ function findDir(dir: string, name: "pages" | "app"): string | null {
 }
 
 const pagesDir = findDir("./", "pages");
-if (pagesDir) {
-  writeTypesToDisc(path.resolve(pagesDir));
+const appDir = findDir("./", "app");
+if (pagesDir || appDir) {
+  writeTypesToDisc({
+    pagesRouterDir: pagesDir ? path.resolve(pagesDir) : undefined,
+    appRouterDir: appDir ? path.resolve(appDir) : undefined,
+  });
 } else {
-  log("no pages directory found");
+  log("no router directory found");
 }

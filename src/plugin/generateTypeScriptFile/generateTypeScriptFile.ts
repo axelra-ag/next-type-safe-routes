@@ -1,14 +1,22 @@
 import walkSync from "walk-sync";
 
 import getFileContent from "./getFileContent";
-import getRoutes from "./getRoutes";
+import getPagesRouterRoutes from "./getPagesRouterRoutes";
+import getAppRouterPagesRoutes from "./getAppRouterPagesRoutes";
+import getAppRouterApiRoutes from "./getAppRouterApiRoutes";
 
 const ignorePagesRoutes = ["_app", "_document"];
-const shouldIncludePageEntry = (route: string) =>
+const shouldIncludePagesRouterPageEntry = (route: string) =>
   route.match(".tsx") &&
   !ignorePagesRoutes.includes(route.replace(/(\.[^.]+)+$/, ""));
-const shouldIncludeApiRouteEntry = (endpoint: string) => endpoint.match(".ts");
-
+const removeAppRouterLayoutGroups = (route: string) =>
+  route.replace(/\([^)]+\)\//, "");
+const shouldIncludeAppRouterPageEntry = (route: string) =>
+  route.endsWith("page.tsx");
+const shouldIncludePagesRouterApiRouteEntry = (endpoint: string) =>
+  endpoint.match(".ts");
+const shouldIncludeAppRouterApiRouteEntry = (route: string) =>
+  route.match(/route\.(js|ts|tsx)$/);
 const getApiRouteFiles = (pagesDir: string) => {
   try {
     return walkSync(`${pagesDir}/api`, {
@@ -23,18 +31,54 @@ const getApiRouteFiles = (pagesDir: string) => {
   }
 };
 
-const generateTypeScriptFile = (pagesDir: string) => {
-  const pagesFiles = walkSync(pagesDir, {
-    directories: false,
-    ignore: ["api"],
-  });
-  const apiRouteFiles = getApiRouteFiles(pagesDir);
-  const relevantPages = pagesFiles.filter(shouldIncludePageEntry);
-  const pages = getRoutes(relevantPages.map((page) => `/${page}`));
-  const relavantApiRoutes = apiRouteFiles.filter(shouldIncludeApiRouteEntry);
-  const apiRoutes = getRoutes(
-    relavantApiRoutes.map((route) => `/api/${route}`)
+const generateTypeScriptFile = ({
+  pagesRouterDir,
+  appRouterDir,
+}: {
+  pagesRouterDir?: string;
+  appRouterDir?: string;
+}) => {
+  const pagesRouterPagesFiles = pagesRouterDir
+    ? walkSync(pagesRouterDir, {
+        directories: false,
+        ignore: ["api"],
+      })
+    : [];
+  const appRouterPagesFiles = appRouterDir
+    ? walkSync(appRouterDir, {
+        directories: false,
+      })
+    : [];
+  const pagesRouterApiRouteFiles = pagesRouterDir
+    ? getApiRouteFiles(pagesRouterDir)
+    : [];
+
+  const relevantPagesRouterPages = pagesRouterPagesFiles.filter(
+    shouldIncludePagesRouterPageEntry
   );
+  const relevantAppRouterPages = appRouterPagesFiles
+    .map(removeAppRouterLayoutGroups)
+    .filter(shouldIncludeAppRouterPageEntry);
+
+  const pages = [
+    ...getPagesRouterRoutes(relevantPagesRouterPages.map((page) => `/${page}`)),
+    ...getAppRouterPagesRoutes(
+      relevantAppRouterPages.map((page) => `/${page}`)
+    ),
+  ];
+
+  const relevantApiRoutes = pagesRouterApiRouteFiles.filter(
+    shouldIncludePagesRouterApiRouteEntry
+  );
+  const relevantAppRouterApiRoutes = appRouterPagesFiles
+    .map(removeAppRouterLayoutGroups)
+    .filter(shouldIncludeAppRouterApiRouteEntry);
+  const apiRoutes = [
+    ...getPagesRouterRoutes(relevantApiRoutes.map((route) => `/api/${route}`)),
+    ...getAppRouterApiRoutes(
+      relevantAppRouterApiRoutes.map((route) => `/${route}`)
+    ),
+  ];
 
   const fileContent = getFileContent({ pages, apiRoutes });
 

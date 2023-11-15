@@ -70,7 +70,7 @@ import { getRoute } from "next-type-safe-routes";
 
 // for simple routes (e.g. the file `/pages/users.tsx`)
 getRoute("/users");
-// for dynamic routes (e.g. the file `/pages/users/[userId]/index.tsx`)
+// for dynamic routes (e.g. the file `/pages/users/[userId]/page.tsx`)
 getRoute({ route: "/users/[userId]", params: { userId: "1" } });
 // for catch all routes (e.g. the file `/pages/catch-all/[[...slug]].tsx`)
 getRoute({ route: "/catch-all", path: "/a/b/c" });

@@ -6,3 +6,8 @@ export type Page = {
 };
 
 export type ApiRoute = Page;
+
+export type RouterDirectories = {
+  pagesRouterDir?: string;
+  appRouterDir?: string;
+};

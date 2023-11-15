@@ -1,12 +1,12 @@
-import getNextPageRoute from "./getNextPageRoute";
+import getNextPagesRouterPageRoute from "./getNextPagesRouterPageRoute";
 import getNextRouteUrlParams from "./getNextRouteUrlParams";
 import { Page } from "./types";
 import { getIsCatchAllRoute, getIsOptionalCatchAllRoute } from "./utils";
 
-const getRoutes = (fileNames: string[]): Page[] => {
+const getPagesRouterRoutes = (fileNames: string[]): Page[] => {
   return fileNames.map((fileName) => {
     return {
-      route: getNextPageRoute(fileName),
+      route: getNextPagesRouterPageRoute(fileName),
       params: getNextRouteUrlParams(fileName),
       isCatchAllRoute: getIsCatchAllRoute(fileName),
       isOptionalCatchAllRoute: getIsOptionalCatchAllRoute(fileName),
@@ -14,4 +14,4 @@ const getRoutes = (fileNames: string[]): Page[] => {
   });
 };
 
-export default getRoutes;
+export default getPagesRouterRoutes;
