@@ -41,13 +41,10 @@ const getFileContent = ({
 
 type Query = { [key: string]: any };
 export type TypeSafePage = ${pages.map(getTypeSafeRoute).join(" | ")};
-${
-  apiRoutes.length > 0
-    ? `export type TypeSafeApiRoute = ${apiRoutes
-        .map(getTypeSafeRoute)
-        .join(" | ")};`
-    : ""
-}
+export type TypeSafeApiRoute = ${
+  apiRoutes.length > 0 ? apiRoutes.map(getTypeSafeRoute).join(" | ") : "never"
+};
+
 export const getPathname: (typeSafeUrl: TypeSafePage | TypeSafeApiRoute) => string;
 export const getRoute: (typeSafeUrl: TypeSafePage | TypeSafeApiRoute) => string;
 `;
